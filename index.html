@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js运动函数的封装</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100px;
+      height: 100px;
+      background-color: lightskyblue;
+      border-radius: 20px;
+      /* margin-left: 100px; */
+    }
+  </style>
+</head>
+<body>
+    <!-- 
+    工作有一段时间了，工作一直是用框架，导致一些js的语法、写法知识点有些遗忘，所以重新学一遍js。
+    react-native：基于react。
+    用DOM操作去实现简单的运动。做项目几乎市面上很少DOM操作的写法，现在的框架都是采用diff算法。
+   -->
+
+   <!-- 实现盒子向右移动
+        一、实现方式
+          1.改变left值，需要设置定位属性
+          2.改变margin-left值
+  -->
+  <div class="container"></div>
+  <script src="./animate.js"></script>
+  <script>
+    var container = document.querySelector('.container')
+    console.log(container.style.marginTop);
+    animate(container, 'height', 200, 20)
+  </script>
+
+  <!-- <script>
+    // var container = document.getElementsByClassName('container')
+    var container = document.querySelector('.container')
+    var x = 1
+    var y = 1
+    var opacity = 0.1
+    var width = 100
+    var height = 100
+
+    // 问题：js 0.1 + 0.2 的计算，结果不是等于0.3,  结果：0.30000000000000004 15个0
+
+    // 设置定时器
+    var timer = setInterval(function () {
+      opacity = (opacity * 100 + 0.1 * 100) / 100
+      container.style.marginLeft = (x += 10) + 'px' // 改变container元素的marginLeft值
+      container.style.marginTop = (y += 10) + 'px' // 改变container元素的marginTop值
+      container.style.opacity = opacity // 改变元素透明度
+
+      // 改变盒子元素的宽和高
+      container.style.width = (width += 10) + 'px'
+      container.style.height = (height += 10) + 'px'
+
+      // 临界值判断
+      if (x >= 500 || y >= 500) {
+        clearInterval(timer)
+      }
+      if (opacity >= 1) {
+        opacity = 1
+      }
+      if (width >= 200 || height >= 200) {
+        width = 200
+        height = 200
+      }
+    }, 20)
+  </script> -->
+
+</body>
+</html>
