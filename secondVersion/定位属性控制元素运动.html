@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      width: 100px;
+      height: 35px;
+      margin: 10px;
+      background-color: lightgrey;
+      border-radius: 15px;
+    }
+
+    .container {
+      width: 100px;
+      height: 100px;
+      background-color: lightskyblue;
+      border-radius: 12px;
+      position: absolute;
+      top: 50px;
+      left: 0px;
+    }
+
+    .line {
+      width: 2px;
+      height: 450px;
+      background-color: green;
+      position: absolute;
+      top: 0;
+      left: 850px;
+    }
+  </style>
+</head>
+<body>
+  <button class="turnRight">向右运动</button>
+  <button class="turnLeft">向左运动</button>
+  <button class="turnTop">向上运动</button>
+  <button class="turnBottom">向下运动</button>
+  <div class="container"></div>
+  <div class="line"></div>
+
+  <script>
+    var turnRight = document.querySelector('.turnRight')
+    var turnLeft = document.querySelector('.turnLeft')
+    var turnTop = document.querySelector('.turnTop')
+    var turnBottom = document.querySelector('.turnBottom')
+
+    var container = document.querySelector('.container')
+    var currentList = getComputedStyle(container) // 获取元素当前值
+
+    // 向右运动
+    turnRight.onclick = function () {
+      var current = parseInt(currentList.left)
+      var timer = setInterval(() => {
+      if (current >= 850) {
+          clearInterval(timer)
+        } else {
+          current += 10
+        }
+        container.style.left = current + 'px'
+      }, 20)
+    }
+
+    // 向左运动
+    turnLeft.onclick = function () {
+      var current = parseInt(currentList.left)
+      var timer = setInterval(() => {
+      if (current <= 0) {
+          clearInterval(timer)
+        } else {
+          current -= 10
+        }
+        container.style.left = current + 'px'
+      }, 20)
+    }
+
+    // 向上运动
+    turnTop.onclick = function () {
+      var current = parseInt(currentList.top)
+      var timer = setInterval(() => {
+      if (current <= 60) {
+          clearInterval(timer)
+        } else {
+          current -= 10
+        }
+        container.style.top = current + 'px'
+      }, 20)
+    }
+
+    // 向下运动
+    turnBottom.onclick = function () {
+      var current = parseInt(currentList.top)
+      var timer = setInterval(() => {
+      if (current >= 300) {
+          clearInterval(timer)
+        } else {
+          current += 10
+        }
+        container.style.top = current + 'px'
+      }, 20)
+    }
+
+
+  </script>
+</body>
+</html>

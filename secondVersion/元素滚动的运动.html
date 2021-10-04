@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 1000px;
+    }
+
+    .turnScrollTop {
+      width: 100px;
+      height: 35px;
+      margin: 10px;
+      background-color: lightgrey;
+      border-radius: 15px;
+      position: fixed;
+      bottom: 100px;
+      right: 0;
+    }
+
+    .container {
+      width: 100px;
+      height: 100px;
+      background-color: lightskyblue;
+      border-radius: 12px;
+    }
+
+    .line {
+      width: 2px;
+      height: 450px;
+      background-color: green;
+      position: absolute;
+      top: 0;
+      left: 850px;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="turnScrollTop">向上滚动</button>
+  <div class="container"></div>
+  <div class="line"></div>
+
+  <script>
+    var turnScrollTop = document.querySelector('.turnScrollTop')
+
+    var container = document.querySelector('.container')
+
+    // 宽度变化
+    turnScrollTop.onclick = function () {
+      var current = document.documentElement.scrollTop
+      var timer = setInterval(() => {
+      if (current >= 900) {
+          clearInterval(timer)
+        } else {
+          current += 10
+        }
+        document.documentElement.scrollTop = current
+      }, 100)
+    }
+
+  </script>
+</body>
+</html>

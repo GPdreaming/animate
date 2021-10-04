@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      width: 100px;
+      height: 35px;
+      margin: 10px;
+      background-color: lightgrey;
+      border-radius: 15px;
+    }
+
+    .container {
+      width: 100px;
+      height: 100px;
+      background-color: lightskyblue;
+      border-radius: 12px;
+    }
+
+    .line {
+      width: 2px;
+      height: 450px;
+      background-color: green;
+      position: absolute;
+      top: 0;
+      left: 850px;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="turnWidth">宽度变化</button>
+  <button class="turnHeight">高度变化</button>
+  <div class="container"></div>
+  <div class="line"></div>
+
+  <script>
+    var turnWidth = document.querySelector('.turnWidth')
+    var turnHeight = document.querySelector('.turnHeight')
+
+    var container = document.querySelector('.container')
+    var currentList = getComputedStyle(container) // 获取元素css属性
+
+    // 宽度变化
+    turnWidth.onclick = function () {
+      var current = parseInt(currentList.width)
+      var timer = setInterval(() => {
+      if (current >= 650) {
+          clearInterval(timer)
+        } else {
+          current += 10
+        }
+        container.style.width = current + 'px'
+      }, 20)
+    }
+
+    // 高度变化
+    turnHeight.onclick = function () {
+      var current = parseInt(currentList.height)
+      var timer = setInterval(() => {
+      if (current >= 650) {
+          clearInterval(timer)
+        } else {
+          current += 10
+        }
+        container.style.height = current + 'px'
+      }, 20)
+    }
+
+  </script>
+</body>
+</html>
