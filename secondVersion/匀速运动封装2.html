@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /** 
+    * 运动函数
+    * 参数：
+    *   dom 要运动的元素
+    *   attrObj 属性参数对象
+    *   callback 运动完成的回调函数
+    * 支持功能：
+    *   支持多个带px单位的属性：left top right bottom marginLeft marginTop width height ...
+    *   支持运动到任意位置
+    *   支持透明度运动
+    *   支持滚动条运动
+    *   可以自定义速度
+    *   支持多元素运动
+    *   支持多属性同时运动
+    *   支持运动完成之后进行其他操作（回调函数）
+    */
+    function animate(dom, attrObj, callback) {
+      // attrObj = {
+      //   'width': 200,
+      //   'height': 200,
+      //   'left': 532,
+      //   'top': 500
+      // }
+      // attrObj = {
+      //   'width':{
+      //     'current': parseInt(getComputedStyle(dom)['width']),
+      //     'target': attrObj['width']
+      //   },
+      //   'height':{
+      //     'current': parseInt(getComputedStyle(dom)['height']),
+      //     'target': attrObj['height']
+      //   },
+      //   'opacity':{
+      //     'current': parseInt(getComputedStyle(dom)['opacity']*100),
+      //     'target': attrObj['opacity']*100
+      //   }
+      // }
+      for (var key in attrObj) {
+        if (key === 'opacity') {
+          var current = parseInt(getComputedStyle(dom)[key] * 100)
+          var target = attrObj[key] * 100
+        } else if (key.indexOf('scroll') !== -1) {
+          var current = dom[key]
+          var target = attrObj[key]
+        } else {
+          var current = parseInt(getComputedStyle(dom)[key])
+          var target = attrObj[key]
+        }
+        attrObj[key] = {
+          'current': current,
+          'target': target
+        }
+      }
+
+      /* // 判断要运动的属性
+      if (attr === 'opacity') {
+        // 属性的当前值
+        var current = parseInt( getComputedStyle(dom)[attr]*100 )
+        // 属性的目标值
+        target *= 100
+      // } else if (attr === 'scrollTop' || attr === 'scrollLeft') {
+      } else if (attr.indexOf('scroll') !== -1) {
+        // 属性的当前值
+        var current = dom[attr]
+      } else {
+        // 属性的当前值
+        var current = parseInt( getComputedStyle(dom)[attr] )
+      } */
+
+      clearInterval(dom.timer)
+      dom.timer = setInterval(function () {
+        for (var key in attrObj) {
+          var current = attrObj[key].current
+          var target = attrObj[key].target
+
+          var speed = (target - current) / 10 // 持续变化的速度
+          
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed) // 根据运动方向进行取整
+
+          // 当前位置+速度
+          attrObj[key].current += speed
+
+          // 临界值判断(运动停止条件：剩余运动量 <= 每次的运动量)
+          if (Math.abs(target - current) <= Math.abs(speed)) {
+            attrObj[key].current = target // 到达目的地
+
+            // 删除运动完成的属性
+            delete attrObj[key]
+
+            // 判断对象中是否还有其他属性
+            for (var attr in attrObj) {//{}
+              // 能执行进来说明对象还有其他属性
+              return false // 终止当前函数执行
+            }
+            clearInterval(dom.timer)
+
+            // 运动完成执行回调函数
+            typeof callback === 'function' ? callback() : ''
+          } else {
+            // 持续改变运动属性
+            if (key === 'opacity') {
+              dom.style[key] = attrObj[key].current / 100
+            } else if (key.indexOf('scroll') !== -1) {
+              dom[key] = attrObj[key].current
+            } else {
+              dom.style[key] = attrObj[key].current + 'px'
+            }
+          }
+        }
+      }, 20)
+    }
+  </script>
+</body>
+</html>
